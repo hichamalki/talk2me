@@ -65,7 +65,7 @@
                   <option value="ar">Arabe</option>
                 </select>
               </div>
-              <button type="submit" class="btn btn-primary">Démarrer</button>
+              <button class="btn btn-primary">Démarrer</button>
             </form>
           </p>
         </div>
@@ -77,15 +77,15 @@
             <form id="connect-form">
               <div class="form-group">
                 <label>Nom d'utilisateur</label>
-                <input type="text" class="form-control" name="username" placeholder="Nom d'utilisateur">
+                <input type="text" class="form-control" name="username" placeholder="Nom d'utilisateur" required>
               </div>
               <div class="form-group">
                 <label for="from">Identifiant de la conversation</label>
-                <input type="text" class="form-control" name="idconversation" placeholder="___.___.___">
+                <input type="text" class="form-control" name="idconversation" placeholder="___.___.___" required>
               </div>
               <div class="form-group">
                 <label for="to">Mot de passe</label>
-                <input type="password" class="form-control" name="password" placeholder="****">
+                <input type="password" class="form-control" name="password" placeholder="****" required>
               </div>
               <button type="submit" class="btn btn-primary">Se connecter</button>
             </form>
@@ -116,7 +116,7 @@
                 <div class="form-group">
                   <label>Identifiant de la conversation</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" value="123.456.789" readonly>
+                    <input id="modal-idconversation" type="text" class="form-control" value="" readonly>
                     <span class="input-group-btn">
                       <button class="btn btn-primary copy-clip" type="button"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> Copy</button>
                     </span>
@@ -125,7 +125,7 @@
                 <div class="form-group">
                   <label>Mot de passe</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" value="9876" readonly>
+                    <input id="modal-password" type="text" class="form-control" value="" readonly>
                     <span class="input-group-btn">
                       <button class="btn btn-primary copy-clip" type="button"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> Copy</button>
                     </span>
@@ -145,6 +145,7 @@
       </div>
     </div>
 
+    <script src="/socket.io/socket.io.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 

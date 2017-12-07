@@ -44,12 +44,65 @@ function formatAMPM(date) {
     return strTime;
 }
 
+function rand(min, max) {
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
+var socket = io();
+var conversation = {
+    usernames: {
+        start: null,
+        connect: null,
+    },
+    from: null,
+    to: null,
+    idconversation: null,
+    password: null
+};
+
 $(document).ready(function() {
 
+    socket.on('m-error', function(msg) {
+        alert("Erreur : " + msg);
+    });
+
+    socket.on('m-notif', function(msg) {
+        alert("Notif : "+msg);
+    });
+
+    socket.on('conversation-connected', function(username) {
+        //window.location.href = "/talk";
+        console.log(username);
+    });
+
 	$("#start-form").submit(function() {
-		$("#start-modal").modal();
+        if(!$(this).find("input[name=username]").val().trim()) {
+          alert("Veuillez entrer un nom d'utilisateur valide.");
+          return false;
+        }
+
+        conversation.usernames.start = $(this).find("input[name=username]").val();
+        conversation.from = $(this).find("select[name=from]").val();
+        conversation.to = $(this).find("select[name=to]").val();
+        conversation.idconversation = rand(100, 999)+"."+rand(100, 999)+"."+rand(100, 999);
+        conversation.password = rand(1000, 9999);
+
+        $("#modal-idconversation").val(conversation.idconversation);
+        $("#modal-password").val(conversation.password);
+
+        socket.emit('start-conversation', conversation);
+        
+        $("#start-modal").modal();
 		return false;
 	});
+
+    $("#connect-form").submit(function() {
+        conversation.usernames.connect = $(this).find("input[name=username]").val();
+        conversation.idconversation = $(this).find("input[name=idconversation]").val();
+        conversation.password = $(this).find("input[name=password]").val();
+        socket.emit('connect-conversation', conversation);
+        return false
+    });
 
 	$(".copy-clip").click(function() {
 		var input = $(this).parent().parent().find("input");

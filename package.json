@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/hichamalki/talk2me#readme",
   "dependencies": {
-    "express": "latest"
+    "express": "latest",
+    "socket.io": "^2.0.4"
   }
 }

@@ -1,0 +1,22 @@
+{
+  "name": "talk2me",
+  "version": "0.0.1",
+  "description": "Chat multilingue",
+  "main": "Server.js",
+  "scripts": {
+    "start" : "node Server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hichamalki/talk2me.git"
+  },
+  "author": "Hicham MALKI <hicham.malkii@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hichamalki/talk2me/issues"
+  },
+  "homepage": "https://github.com/hichamalki/talk2me#readme",
+  "dependencies": {
+    "express": "latest"
+  }
+}

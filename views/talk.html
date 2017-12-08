@@ -13,16 +13,26 @@
 
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
         <style>
-           
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
         </style>
 
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="/css/talk.css">
 
     </head>
     <body>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <div class="navbar-brand" href="#" id="username-label">Talk 2 Me</div>
+            </div>
+          </div>
+        </nav>
 
     <div class="main-container">
     
@@ -36,12 +46,12 @@
 
     </div> <!-- /container -->        
 
+    <script src="/socket.io/socket.io.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
-
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
-    <script src="js/main.js"></script>
+    <script src="/js/socks.js"></script>
+    <script src="/js/talk.js"></script>
 
     </body>
 </html>

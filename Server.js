@@ -20,7 +20,7 @@ router.get("/",function(req,res){
   res.sendFile(path + "index.html");
 });
 
-router.get("/talk",function(req,res){
+router.get("/talk/:username/:idconversation",function(req,res){
   res.sendFile(path + "talk.html");
 });
 

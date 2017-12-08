@@ -19,7 +19,7 @@
 	position: relative;
 }
 
-.msg-input textarea {
+.msg-input input {
 	width: calc(100% - 40px);
 	height: 100%;
 	float: left;

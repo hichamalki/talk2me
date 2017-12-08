@@ -1,10 +1,9 @@
-
-
 var express = require('express');
 var app = express();
 var http = require('http');
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
+const translate = require('google-translate-api');
 
 var router = express.Router();
 var path = __dirname + '/views/';
@@ -95,12 +94,24 @@ io.on('connection', function(socket){
       socket.emit('m-error', "Code 05 : La conversation n'as pas été trouvée.");
       return;
     }
+
     if(conversation.action=='start') {
-      conversations[conversation.idconversation].sockets.connect.emit('chat', message);
+      var from = conversations[conversation.idconversation].from;
+      var to = conversations[conversation.idconversation].to;
+      var socketDest = conversations[conversation.idconversation].sockets.connect;
     }
     if(conversation.action=='connect') {
-      conversations[conversation.idconversation].sockets.start.emit('chat', message);
+      var from = conversations[conversation.idconversation].to;
+      var to = conversations[conversation.idconversation].from;
+      var socketDest = conversations[conversation.idconversation].sockets.start; 
     }
+
+    translate(message, {from: from, to: to}).then(res => {
+      socketDest.emit('chat', res.text);
+    }).catch(err => {
+      console.error(err);
+    });
+    
   });
 
 });

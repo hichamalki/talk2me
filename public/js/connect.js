@@ -31,6 +31,7 @@ function connectFunctions() {
     socket.on('conversation-connected', function(username, action) {
         conversation.action = action;
         $.get("/talk", function(html) {
+            $("#username-label").text(username);
             $("#dynamic-content").html(html);
             talkFunctions();
         });

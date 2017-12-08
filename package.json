@@ -18,6 +18,7 @@
   "homepage": "https://github.com/hichamalki/talk2me#readme",
   "dependencies": {
     "express": "latest",
-    "socket.io": "^2.0.4"
+    "socket.io": "^2.0.4",
+    "google-translate-api": "^2.3.0"
   }
 }

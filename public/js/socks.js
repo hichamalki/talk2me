@@ -9,7 +9,8 @@ var conversation = {
     from: null,
     to: null,
     idconversation: null,
-    password: null
+    password: null,
+    action: null
 };
 
 var socket = io();

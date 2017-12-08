@@ -1,19 +1,21 @@
-
-$(document).ready(function() {
-
-    var params = window.location.href.split('/');
+function talkFunctions() {
+    /*var params = window.location.href.split('/');
     var username = params[params.length-2];
     var idconversation = params[params.length-1];
 
-    $("#username-label").text(username);
+    $("#username-label").text(username);*/
+    
+    $(".msg-input button").click(function() {
+        var input = $(this).parent().find("textarea");
+        insertChat(ME, input.val());
+        socket.emit('chat', input.val(), conversation);
+        input.val("");
+    });
 
-	$(".msg-input button").click(function() {
-		var input = $(this).parent().find("textarea");
-		insertChat(ME, input.val());
-		input.val("");
-	});
-
-});
+    socket.on('chat', function(message){
+        insertChat(YOU, message);
+    });
+}
 
 function insertChat(who, text){
     var control = "";

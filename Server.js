@@ -20,7 +20,11 @@ router.get("/",function(req,res){
   res.sendFile(path + "index.html");
 });
 
-router.get("/talk/:username/:idconversation",function(req,res){
+router.get("/connect",function(req,res){
+  res.sendFile(path + "connect.html");
+});
+
+router.get("/talk",function(req,res){
   res.sendFile(path + "talk.html");
 });
 
@@ -43,11 +47,11 @@ io.on('connection', function(socket){
   socket.on('start-conversation', function(conversation) {
   	if(!conversation.idconversation) {
   		socket.emit('m-error', "Code 03 : Une erreur a été survenue.");
-		return;
+		  return;
   	}
   	if(conversations[conversation.idconversation]) {
   		socket.emit('m-error', "Une conversation est ouverte avec le même identifiant.");
-		return;
+		  return;
   	}
 
   	conversation.sockets = {
@@ -62,24 +66,41 @@ io.on('connection', function(socket){
   socket.on('connect-conversation', function(connectConversation) {
   	if(!connectConversation.idconversation) {
   		socket.emit('m-error', "Code 04 : Une erreur a été survenue.");
-		return;
+		  return;
   	}
   	if(!conversations[connectConversation.idconversation]) {
   		socket.emit('m-error', "Code 05 : La conversation n'as pas été trouvée.");
-		return;
+		  return;
   	}
   	var conversation = conversations[connectConversation.idconversation];
   	if(conversation.password!=connectConversation.password) {
   		socket.emit('m-error', "Code 06 : Le mot de passe n'est pas valide.");
-		return;
+		  return;
   	}
   	
   	conversation.usernames.connect = connectConversation.usernames.connect;
   	conversation.sockets.connect = socket;
   	conversations[connectConversation.idconversation] = conversation;
 
-  	conversation.sockets.start.emit('conversation-connected', conversation.usernames.connect);
-  	conversation.sockets.connect.emit('conversation-connected', conversation.usernames.start);
+  	conversation.sockets.start.emit('conversation-connected', conversation.usernames.connect, 'start');
+  	conversation.sockets.connect.emit('conversation-connected', conversation.usernames.start, 'connect');
+  });
+
+  socket.on('chat', function(message, conversation) {
+    if(!conversation.idconversation) {
+      socket.emit('m-error', "Code 03 : Une erreur a été survenue.");
+      return;
+    }
+    if(!conversations[conversation.idconversation]) {
+      socket.emit('m-error', "Code 05 : La conversation n'as pas été trouvée.");
+      return;
+    }
+    if(conversation.action=='start') {
+      conversations[conversation.idconversation].sockets.connect.emit('chat', message);
+    }
+    if(conversation.action=='connect') {
+      conversations[conversation.idconversation].sockets.start.emit('chat', message);
+    }
   });
 
 });
